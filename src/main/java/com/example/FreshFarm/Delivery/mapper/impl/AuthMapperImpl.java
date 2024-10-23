@@ -2,8 +2,8 @@ package com.example.FreshFarm.Delivery.mapper.impl;
 
 import com.example.FreshFarm.Delivery.mapper.AuthMapper;
 import com.example.FreshFarm.Delivery.model.domain.User;
-import com.example.FreshFarm.Delivery.model.dto.AuthRegisterRequest;
-import com.example.FreshFarm.Delivery.model.dto.AuthResponse;
+import com.example.FreshFarm.Delivery.model.dto.auth.AuthRegisterRequest;
+import com.example.FreshFarm.Delivery.model.dto.auth.AuthResponse;
 import com.example.FreshFarm.Delivery.model.enums.Role;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class AuthMapperImpl implements AuthMapper {
     @Override
     public User toUser(AuthRegisterRequest authRegisterRequest) {
         User user = new User();
-        user.setUsername(authRegisterRequest.getUsername());
+        user.setName(authRegisterRequest.getUsername());
         user.setPassword(authRegisterRequest.getPassword());
         user.setEmail(authRegisterRequest.getEmail());
         user.setRole(Role.valueOf(authRegisterRequest.getRole()));

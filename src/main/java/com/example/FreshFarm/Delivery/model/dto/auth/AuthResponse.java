@@ -1,4 +1,4 @@
-package com.example.FreshFarm.Delivery.model.dto;
+package com.example.FreshFarm.Delivery.model.dto.auth;
 
 import lombok.Data;
 

@@ -6,6 +6,7 @@ import com.example.FreshFarm.Delivery.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
 
         String role = userDetails.getAuthorities().toString();
-        claims.put("rele", role);
+        claims.put("role", role);
 
         Date issuedDate = new Date();
         Date expireDate = new Date(issuedDate.getTime() + expiration);
@@ -66,7 +67,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = secretKey.getBytes();
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
