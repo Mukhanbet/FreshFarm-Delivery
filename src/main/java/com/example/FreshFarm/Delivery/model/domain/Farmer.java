@@ -3,6 +3,8 @@ package com.example.FreshFarm.Delivery.model.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "farmers_tb")
@@ -19,4 +21,7 @@ public class Farmer {
     @MapsId
     @JoinColumn
     private User userDetails;
+
+    @OneToMany(mappedBy = "farmer")
+    private List<Product> products;
 }

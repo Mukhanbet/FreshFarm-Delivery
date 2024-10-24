@@ -1,0 +1,18 @@
+package com.example.FreshFarm.Delivery.service;
+
+import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
+import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
+
+import java.util.List;
+
+public interface ProductService {
+    List<ProductResponse> all(int page, int size);
+    List<ProductResponse> farmerProducts(Long farmerId, int page, int size);
+    List<ProductResponse> findByName(String name, int page, int size);
+    List<ProductResponse> sortBy(String sortBy, String sortType, int page, int size);
+    List<ProductResponse> getOwnProducts(String token, int page, int size);
+    ProductResponse getDetail(Long id);
+    ProductResponse add(String token, ProductRequest productRequest);
+    ProductResponse update(String token, Long id, ProductRequest productRequest);
+    void delete(String token, Long id);
+}
