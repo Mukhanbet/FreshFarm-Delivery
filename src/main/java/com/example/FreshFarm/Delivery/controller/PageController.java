@@ -1,6 +1,7 @@
 package com.example.FreshFarm.Delivery.controller;
 
 import com.example.FreshFarm.Delivery.model.dto.auth.AuthLoginRequest;
+import com.example.FreshFarm.Delivery.model.dto.auth.AuthRegisterRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,12 @@ public class PageController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("authLoginRequest", new AuthLoginRequest());
-        return "login"; // название HTML-шаблона (login.html)
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("authRegisterRequest", new AuthRegisterRequest());
+        return "register";
     }
 }

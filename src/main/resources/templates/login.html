@@ -16,7 +16,7 @@
       <span>Login</span>
     </div>
 
-    <form th:action="@{/login}" th:object="${authLoginRequest}" method="post">
+    <form th:action="@{/auth/login}" th:object="${authLoginRequest}" method="post">
       <div class="input_box">
         <input type="text" id="user" class="input-field" placeholder=" " required th:field="*{email}">
         <label for="user" class="label">Email</label>
@@ -46,7 +46,7 @@
     </form>
 
     <div class="register">
-      <span>Don't have an account? <a href="register.html">Register</a></span>
+      <span>Don't have an account? <a th:href="@{/pages/register}">Register</a></span>
     </div>
   </div>
 </div>

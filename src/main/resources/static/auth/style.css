@@ -12,7 +12,7 @@
 }
 
 body {
-  background-image: url("static/auth/img/pexels-mart-production-7890120.jpg");
+  background-image: url("/auth/img/auth_image.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
