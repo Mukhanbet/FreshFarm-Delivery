@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,6 +33,12 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "userDetails")
     private Farmer farmer;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    private List<Basket> baskets;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

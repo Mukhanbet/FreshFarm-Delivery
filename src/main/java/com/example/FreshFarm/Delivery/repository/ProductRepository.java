@@ -2,7 +2,6 @@ package com.example.FreshFarm.Delivery.repository;
 
 import com.example.FreshFarm.Delivery.model.domain.Farmer;
 import com.example.FreshFarm.Delivery.model.domain.Product;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
