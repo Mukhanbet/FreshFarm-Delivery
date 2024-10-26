@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +24,7 @@ public class Order {
     @ManyToOne
     @JoinColumn
     private User customer;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 }
