@@ -2,6 +2,7 @@ package com.example.FreshFarm.Delivery.mapper.impl;
 
 import com.example.FreshFarm.Delivery.mapper.BasketMapper;
 import com.example.FreshFarm.Delivery.model.domain.Basket;
+import com.example.FreshFarm.Delivery.model.domain.Image;
 import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.domain.User;
 import com.example.FreshFarm.Delivery.model.dto.basket.BasketResponse;
@@ -29,6 +30,7 @@ public class BasketMapperImpl implements BasketMapper {
         BasketResponse response = new BasketResponse();
         response.setBasketId(basket.getId());
         response.setName(basket.getProduct().getName());
+        response.setImagePath(basket.getProduct().getImages().get(0).getPath());
         response.setPrice(basket.getProduct().getPrice());
         response.setKilo(basket.getKilo());
         response.setTotalPrice(basket.getKilo() * basket.getProduct().getPrice());

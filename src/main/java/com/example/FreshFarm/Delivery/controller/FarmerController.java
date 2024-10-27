@@ -5,6 +5,7 @@ import com.example.FreshFarm.Delivery.model.dto.farmer.FarmerResponse;
 import com.example.FreshFarm.Delivery.service.FarmerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +36,10 @@ public class FarmerController {
     @PutMapping
     public FarmerResponse update(
             @RequestHeader("Authorization") String token,
-            @RequestBody FarmerRequest request
+            @RequestPart(name = "request") FarmerRequest request,
+            @RequestPart(name = "image") MultipartFile image
     ) {
-        return farmerService.update(token, request);
+        return farmerService.update(token, request, image);
     }
 
     @DeleteMapping

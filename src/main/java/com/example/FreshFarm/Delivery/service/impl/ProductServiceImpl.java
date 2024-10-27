@@ -4,19 +4,23 @@ import com.example.FreshFarm.Delivery.config.JwtService;
 import com.example.FreshFarm.Delivery.exception.CustomException;
 import com.example.FreshFarm.Delivery.mapper.ProductMapper;
 import com.example.FreshFarm.Delivery.model.domain.Farmer;
+import com.example.FreshFarm.Delivery.model.domain.Image;
 import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.domain.User;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import com.example.FreshFarm.Delivery.repository.FarmerRepository;
 import com.example.FreshFarm.Delivery.repository.ProductRepository;
+import com.example.FreshFarm.Delivery.service.ImageService;
 import com.example.FreshFarm.Delivery.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final FarmerRepository farmerRepository;
     private final JwtService jwtService;
+    private final ImageService imageService;
 
     @Override
     public List<ProductResponse> all(int page, int size) {
@@ -64,9 +69,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse add(String token, ProductRequest productRequest) {
+    public ProductResponse add(String token, ProductRequest productRequest, List<MultipartFile> images) {
         User user = jwtService.getUserFromToken(token);
-        return productMapper.toResponse(productRepository.save(productMapper.toProduct(new Product(), user.getFarmer(), productRequest)));
+        Product product = productMapper.toProduct(new Product(), user.getFarmer(), productRequest);
+        List<Image> productImages = new ArrayList<>();
+        for (MultipartFile file : images) {
+            productImages.add(imageService.save(file));
+        }
+        product.setImages(productImages);
+        return productMapper.toResponse(productRepository.save(product));
     }
 
     @Override
@@ -82,6 +93,9 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id).orElseThrow(() -> new CustomException("Product not found", HttpStatus.NOT_FOUND));
         if (!product.getFarmer().equals(user.getFarmer())) {
             throw new CustomException("You are not allowed to delete this product", HttpStatus.UNAUTHORIZED);
+        }
+        for (Image image : product.getImages()) {
+            imageService.delete(image.getFilename());
         }
         productRepository.delete(product);
     }

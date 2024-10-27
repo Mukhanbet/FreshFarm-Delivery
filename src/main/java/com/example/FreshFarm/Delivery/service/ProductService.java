@@ -2,6 +2,7 @@ package com.example.FreshFarm.Delivery.service;
 
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ProductService {
     List<ProductResponse> sortBy(String sortBy, String sortType, int page, int size);
     List<ProductResponse> getOwnProducts(String token, int page, int size);
     ProductResponse getDetail(Long id);
-    ProductResponse add(String token, ProductRequest productRequest);
+    ProductResponse add(String token, ProductRequest productRequest, List<MultipartFile> images);
     ProductResponse update(String token, Long id, ProductRequest productRequest);
     void delete(String token, Long id);
 }

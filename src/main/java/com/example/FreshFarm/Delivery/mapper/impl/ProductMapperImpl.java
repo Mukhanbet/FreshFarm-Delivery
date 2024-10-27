@@ -2,6 +2,7 @@ package com.example.FreshFarm.Delivery.mapper.impl;
 
 import com.example.FreshFarm.Delivery.mapper.ProductMapper;
 import com.example.FreshFarm.Delivery.model.domain.Farmer;
+import com.example.FreshFarm.Delivery.model.domain.Image;
 import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
@@ -28,6 +29,9 @@ public class ProductMapperImpl implements ProductMapper {
         response.setId(product.getId());
         response.setFarmer(product.getFarmer().getUserDetails().getName());
         response.setName(product.getName());
+        for (Image image : product.getImages()) {
+            response.getImagePath().add(image.getPath());
+        }
         response.setDescription(product.getDescription());
         response.setPrice(product.getPrice());
         response.setStock(product.getStock());

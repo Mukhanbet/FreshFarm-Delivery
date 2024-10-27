@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class FarmerResponse {
     private Long id;
     private String farmerName;
+    private String imagePath;
     private String email;
     private String address;
     private String phone;

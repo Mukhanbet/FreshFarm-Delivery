@@ -5,6 +5,7 @@ import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import com.example.FreshFarm.Delivery.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -51,9 +52,10 @@ public class ProductController {
     @PostMapping
     public ProductResponse add(
             @RequestHeader("Authorization") String token,
-            @RequestBody ProductRequest productRequest
+            @RequestPart(name = "request") ProductRequest productRequest,
+            @RequestPart(name = "images") List<MultipartFile> images
     ) {
-        return productService.add(token, productRequest);
+        return productService.add(token, productRequest, images);
     }
 
     @PutMapping("/{id}")
@@ -61,6 +63,7 @@ public class ProductController {
             @RequestHeader("Authorization") String token,
             @PathVariable Long id,
             @RequestBody ProductRequest productRequest
+            // todo: Think about how to update the images
     ) {
         return productService.update(token, id, productRequest);
     }

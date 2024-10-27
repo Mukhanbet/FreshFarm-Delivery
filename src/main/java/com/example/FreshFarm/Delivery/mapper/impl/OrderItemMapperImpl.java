@@ -28,6 +28,7 @@ public class OrderItemMapperImpl implements OrderItemMapper {
         response.setId(orderItem.getId());
         response.setFarmerName(orderItem.getProduct().getFarmer().getUserDetails().getName());
         response.setProductName(orderItem.getProduct().getName());
+        response.setImagePath(orderItem.getProduct().getImages().get(0).getPath());
         response.setKilo(orderItem.getKilo());
         response.setPrice(orderItem.getPrice());
         return response;

@@ -24,4 +24,7 @@ public class Farmer {
 
     @OneToMany(mappedBy = "farmer")
     private List<Product> products;
+
+    @OneToOne(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image image;
 }
