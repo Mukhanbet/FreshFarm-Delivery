@@ -16,4 +16,5 @@ public interface ProductService {
     ProductResponse add(String token, ProductRequest productRequest, List<MultipartFile> images);
     ProductResponse update(String token, Long id, ProductRequest productRequest);
     void delete(String token, Long id);
+    Integer totalPages(int page, int size);
 }

@@ -72,9 +72,10 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse add(String token, ProductRequest productRequest, List<MultipartFile> images) {
         User user = jwtService.getUserFromToken(token);
         Product product = productMapper.toProduct(new Product(), user.getFarmer(), productRequest);
+        product = productRepository.save(product);
         List<Image> productImages = new ArrayList<>();
         for (MultipartFile file : images) {
-            productImages.add(imageService.save(file));
+            productImages.add(imageService.save(file, product));
         }
         product.setImages(productImages);
         return productMapper.toResponse(productRepository.save(product));
@@ -98,5 +99,10 @@ public class ProductServiceImpl implements ProductService {
             imageService.delete(image.getFilename());
         }
         productRepository.delete(product);
+    }
+
+    @Override
+    public Integer totalPages(int page, int size) {
+        return productRepository.findAll(PageRequest.of(page, size)).getTotalPages();
     }
 }

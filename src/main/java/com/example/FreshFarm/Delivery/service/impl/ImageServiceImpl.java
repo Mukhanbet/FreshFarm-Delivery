@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.FreshFarm.Delivery.exception.CustomException;
 import com.example.FreshFarm.Delivery.model.domain.Image;
+import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.repository.ImageRepository;
 import com.example.FreshFarm.Delivery.service.ImageService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,32 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image save(MultipartFile file) {
+        return imageRepository.save(saveImage(file));
+    }
+
+    @Override
+    public Image save(MultipartFile file, Product product) {
+        Image image = saveImage(file);
+        image.setProduct(product);
+        return imageRepository.save(image);
+    }
+
+    @Override
+    public void delete(String filename) {
+        s3.deleteObject(bucketName, filename);
+    }
+
+    private File convertMultipartFileToFile(MultipartFile file) {
+        File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+        try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+            fos.write(file.getBytes());
+        } catch (IOException e) {
+            throw new CustomException("Error while converting multipart file", HttpStatus.BAD_GATEWAY);
+        }
+        return convertFile;
+    }
+
+    private Image saveImage(MultipartFile file) {
         if (file.isEmpty()) {
             throw new CustomException("Incorrect file", HttpStatus.BAD_REQUEST);
         }
@@ -46,20 +73,5 @@ public class ImageServiceImpl implements ImageService {
         image.setPath(s3.getUrl(bucketName, fileName).toString());
 
         return imageRepository.save(image);
-    }
-
-    @Override
-    public void delete(String filename) {
-        s3.deleteObject(bucketName, filename);
-    }
-
-    private File convertMultipartFileToFile(MultipartFile file) {
-        File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-            fos.write(file.getBytes());
-        } catch (IOException e) {
-            throw new CustomException("Error while converting multipart file", HttpStatus.BAD_GATEWAY);
-        }
-        return convertFile;
     }
 }

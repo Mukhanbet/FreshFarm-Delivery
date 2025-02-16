@@ -8,6 +8,7 @@ import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ProductMapperImpl implements ProductMapper {
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
         product.setFarmer(farmer);
+        product.setCreatedAt(LocalDateTime.now());
         return product;
     }
 
@@ -29,12 +31,17 @@ public class ProductMapperImpl implements ProductMapper {
         response.setId(product.getId());
         response.setFarmer(product.getFarmer().getUserDetails().getName());
         response.setName(product.getName());
+
+        List<String> imagesPath = new ArrayList<>();
         for (Image image : product.getImages()) {
-            response.getImagePath().add(image.getPath());
+            imagesPath.add(image.getPath());
         }
+        response.setImagePath(imagesPath);
+
         response.setDescription(product.getDescription());
         response.setPrice(product.getPrice());
         response.setStock(product.getStock());
+        response.setCreatedAt(product.getCreatedAt());
         return response;
     }
 

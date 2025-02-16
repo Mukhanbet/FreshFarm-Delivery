@@ -6,11 +6,18 @@
 }
 
 .blog__item__pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Обрежет лишнюю часть изображения */
 
     img {
-        min-width: 100%;
+        width: 100%; /* Сделает изображение равным ширине контейнера */
+        height: 200px; /* Задай фиксированную высоту */
+        object-fit: cover; /* Обрезает изображение, сохраняя пропорции */
     }
 }
+
 
 .blog__item__text {
     padding-top: 25px;
