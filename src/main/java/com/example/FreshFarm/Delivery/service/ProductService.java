@@ -1,5 +1,6 @@
 package com.example.FreshFarm.Delivery.service;
 
+import com.example.FreshFarm.Delivery.model.dto.product.DiscountedProductResponse;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,5 @@ public interface ProductService {
     ProductResponse update(String token, Long id, ProductRequest productRequest);
     void delete(String token, Long id);
     Integer totalPages(int page, int size);
+    List<DiscountedProductResponse> getDiscountedProducts(int page, int size);
 }

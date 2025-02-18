@@ -8,10 +8,7 @@ import com.example.FreshFarm.Delivery.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -64,8 +61,8 @@ public class PageController {
     }
 
 
-    @GetMapping("/blog-details")
-    public String blogDetails(Model model) {
+    @GetMapping("/blog-details/{id}")
+    public String blogDetails(Model model, @PathVariable Long id) {
         model.addAttribute("title", "Fresh Farm Delivery");
         return "blog-details";
     }
@@ -95,8 +92,13 @@ public class PageController {
     }
 
     @GetMapping("/shop-grid")
-    public String shopGrid(Model model) {
+    public String shopGrid(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size,
+            Model model
+    ) {
         model.addAttribute("title", "Fresh Farm Delivery");
+        model.addAttribute("discountedProducts", productService.getDiscountedProducts(page, size));
         return "shop-grid";
     }
 

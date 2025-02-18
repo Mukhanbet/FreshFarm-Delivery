@@ -1,5 +1,6 @@
 package com.example.FreshFarm.Delivery.controller;
 
+import com.example.FreshFarm.Delivery.model.dto.product.DiscountedProductResponse;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import com.example.FreshFarm.Delivery.service.ProductService;
@@ -74,5 +75,13 @@ public class ProductController {
             @PathVariable Long id
     ) {
         productService.delete(token, id);
+    }
+
+    @GetMapping("/discount")
+    public List<DiscountedProductResponse> getDiscountedProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return productService.getDiscountedProducts(page, size);
     }
 }

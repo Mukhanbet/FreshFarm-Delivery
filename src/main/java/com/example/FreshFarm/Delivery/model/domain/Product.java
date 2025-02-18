@@ -20,6 +20,8 @@ public class Product {
     private double price;
     private int stock;
     private LocalDateTime createdAt;
+    private Boolean haveDiscount;
+    private Integer discount;
 
     @ManyToOne
     @JoinColumn
@@ -33,4 +35,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
+
+    @OneToMany(mappedBy = "product")
+    private List<Comment> comments;
 }

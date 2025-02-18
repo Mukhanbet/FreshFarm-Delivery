@@ -4,14 +4,17 @@ import com.example.FreshFarm.Delivery.mapper.ProductMapper;
 import com.example.FreshFarm.Delivery.model.domain.Farmer;
 import com.example.FreshFarm.Delivery.model.domain.Image;
 import com.example.FreshFarm.Delivery.model.domain.Product;
+import com.example.FreshFarm.Delivery.model.dto.product.DiscountedProductResponse;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class ProductMapperImpl implements ProductMapper {
     @Override
@@ -29,7 +32,6 @@ public class ProductMapperImpl implements ProductMapper {
     public ProductResponse toResponse(Product product) {
         ProductResponse response = new ProductResponse();
         response.setId(product.getId());
-        response.setFarmer(product.getFarmer().getUserDetails().getName());
         response.setName(product.getName());
 
         List<String> imagesPath = new ArrayList<>();
@@ -50,6 +52,39 @@ public class ProductMapperImpl implements ProductMapper {
         List<ProductResponse> responseList = new ArrayList<>();
         for (Product product : products) {
             responseList.add(toResponse(product));
+        }
+        return responseList;
+    }
+
+    @Override
+    public DiscountedProductResponse toDiscountResponse(Product product) {
+        DiscountedProductResponse response = new DiscountedProductResponse();
+        response.setId(product.getId());
+        response.setName(product.getName());
+
+        List<String> imagesPath = new ArrayList<>();
+        for (Image image : product.getImages()) {
+            imagesPath.add(image.getPath());
+        }
+        response.setImagePath(imagesPath);
+
+        double price = product.getPrice();
+        response.setDescription(product.getDescription());
+        response.setPrice(price);
+        response.setStock(product.getStock());
+        response.setCreatedAt(product.getCreatedAt());
+        int discount = product.getDiscount();
+        response.setDiscount(discount);
+        response.setDiscountPrice(price - (price * discount / 100));
+        log.atInfo().log("Discount response: {}", response.getDiscount());
+        return response;
+    }
+
+    @Override
+    public List<DiscountedProductResponse> toDiscountedResponseList(List<Product> products) {
+        List<DiscountedProductResponse> responseList = new ArrayList<>();
+        for (Product product : products) {
+            responseList.add(toDiscountResponse(product));
         }
         return responseList;
     }

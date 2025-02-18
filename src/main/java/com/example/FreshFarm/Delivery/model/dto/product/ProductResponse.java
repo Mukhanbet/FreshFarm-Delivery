@@ -8,7 +8,6 @@ import java.util.List;
 @Data
 public class ProductResponse {
     private Long id;
-    private String farmer;
     private String name;
     private List<String> imagePath;
     private String description;

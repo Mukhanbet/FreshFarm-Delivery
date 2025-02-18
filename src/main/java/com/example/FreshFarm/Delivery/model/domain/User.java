@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Basket> baskets;
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));

@@ -1,5 +1,6 @@
 package com.example.FreshFarm.Delivery.service.impl;
 
+import com.amazonaws.services.dynamodbv2.xspec.L;
 import com.example.FreshFarm.Delivery.config.JwtService;
 import com.example.FreshFarm.Delivery.exception.CustomException;
 import com.example.FreshFarm.Delivery.mapper.ProductMapper;
@@ -7,6 +8,7 @@ import com.example.FreshFarm.Delivery.model.domain.Farmer;
 import com.example.FreshFarm.Delivery.model.domain.Image;
 import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.domain.User;
+import com.example.FreshFarm.Delivery.model.dto.product.DiscountedProductResponse;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
 import com.example.FreshFarm.Delivery.repository.FarmerRepository;
@@ -104,5 +106,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer totalPages(int page, int size) {
         return productRepository.findAll(PageRequest.of(page, size)).getTotalPages();
+    }
+
+    @Override
+    public List<DiscountedProductResponse> getDiscountedProducts(int page, int size) {
+        return productMapper.toDiscountedResponseList(
+                productRepository.findAllByHaveDiscount(true, PageRequest.of(page, size))
+        );
     }
 }

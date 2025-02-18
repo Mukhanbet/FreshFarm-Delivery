@@ -15,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByFarmer(Farmer farmer, Pageable pageable);
     @Query(value = "SELECT * FROM products_tb WHERE name LIKE %:name%", nativeQuery = true)
     List<Product> findAllByName(@Param("name") String name, Pageable of);
+    List<Product> findAllByHaveDiscount(boolean haveDiscount, Pageable pageable);
 }
