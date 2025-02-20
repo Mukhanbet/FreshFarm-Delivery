@@ -1,5 +1,7 @@
 package com.example.FreshFarm.Delivery.controller;
 
+import com.amazonaws.services.dynamodbv2.document.Page;
+import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.dto.auth.AuthLoginRequest;
 import com.example.FreshFarm.Delivery.model.dto.auth.AuthRegisterRequest;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
@@ -94,11 +96,27 @@ public class PageController {
     @GetMapping("/shop-grid")
     public String shopGrid(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(required = false, defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortType,
             Model model
     ) {
         model.addAttribute("title", "Fresh Farm Delivery");
-        model.addAttribute("discountedProducts", productService.getDiscountedProducts(page, size));
+
+        List<ProductResponse> productResponses;
+        if (sortBy != null) {
+            productResponses = productService.sortBy(sortBy, sortType, page, size);
+        } else {
+            productResponses = productService.all(page, size);
+        }
+        model.addAttribute("products", productResponses);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productService.totalPages(page, size));
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortType", sortType);
+        model.addAttribute("discountedProducts", productService.getDiscountedProducts(0, 6));
+        model.addAttribute("latestProducts", productService.sortBy("createdAt", "asc", 0, 9));
+
         return "shop-grid";
     }
 

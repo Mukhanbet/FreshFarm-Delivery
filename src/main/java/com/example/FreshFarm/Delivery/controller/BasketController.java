@@ -18,7 +18,7 @@ public class BasketController {
     public void add(
             @RequestHeader("Authorization") String token,
             @PathVariable Long productId,
-            @RequestParam Double kilo
+            @RequestParam(defaultValue = "1") Double kilo
     ) {
         basketService.add(token, productId, kilo);
     }
