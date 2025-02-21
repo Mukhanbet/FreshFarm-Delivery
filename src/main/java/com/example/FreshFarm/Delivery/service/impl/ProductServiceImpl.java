@@ -114,4 +114,9 @@ public class ProductServiceImpl implements ProductService {
                 productRepository.findAllByHaveDiscount(true, PageRequest.of(page, size))
         );
     }
+
+    @Override
+    public List<ProductResponse> getRelatedProducts(String name, double price, Long id, int page, int size) {
+        return productMapper.toResponseList(productRepository.getRelatedProducts(name, price, id, PageRequest.of(page, size)));
+    }
 }

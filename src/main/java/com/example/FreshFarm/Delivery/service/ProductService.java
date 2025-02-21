@@ -19,4 +19,5 @@ public interface ProductService {
     void delete(String token, Long id);
     Integer totalPages(int page, int size);
     List<DiscountedProductResponse> getDiscountedProducts(int page, int size);
+    List<ProductResponse> getRelatedProducts(String name, double price, Long id, int page, int size);
 }

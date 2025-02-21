@@ -63,8 +63,8 @@ public class PageController {
     }
 
 
-    @GetMapping("/blog-details/{id}")
-    public String blogDetails(Model model, @PathVariable Long id) {
+    @GetMapping("/blog-details")
+    public String blogDetails(Model model) {
         model.addAttribute("title", "Fresh Farm Delivery");
         return "blog-details";
     }
@@ -87,8 +87,16 @@ public class PageController {
         return "main";
     }
 
-    @GetMapping("/shop-details")
-    public String shopDetails(Model model) {
+    @GetMapping("/shop-details/{id}")
+    public String shopDetails(
+            @PathVariable Long id,
+            Model model
+    ) {
+        ProductResponse response = productService.getDetail(id);
+        List<ProductResponse> relatedProducts = productService.getRelatedProducts(response.getName(), response.getPrice(), response.getId(), 0, 10);
+
+        model.addAttribute("product", response);
+        model.addAttribute("relatedProducts", relatedProducts);
         model.addAttribute("title", "Fresh Farm Delivery");
         return "shop-details";
     }

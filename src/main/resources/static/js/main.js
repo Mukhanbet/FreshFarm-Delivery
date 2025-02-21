@@ -7,6 +7,51 @@
     Created: Colorlib
 ---------------------------------------------------------  */
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".add-to-basket").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const productId = this.getAttribute("data-product-id");
+            const kilo = document.getElementById("kilo-input") ? document.getElementById("kilo-input").value : 1;
+            const token = getCookie("access_token");
+
+            if (!token) {
+                alert("Вы не авторизованы!");
+                return;
+            }
+
+            fetch(`/basket/${productId}?kilo=${kilo}`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert("Товар добавлен в корзину!");
+                } else {
+                    alert("Ошибка при добавлении в корзину!");
+                }
+            }).catch(error => {
+                console.error("Ошибка запроса:", error);
+                alert("Ошибка соединения!");
+            });
+        });
+    });
+
+    function getCookie(name) {
+        let cookies = document.cookie.split("; ");
+        for (let cookie of cookies) {
+            let [key, value] = cookie.split("=");
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+        return null;
+    }
+});
+
 'use strict';
 
 (function ($) {
