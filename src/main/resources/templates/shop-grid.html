@@ -62,7 +62,6 @@
                 <li class="active"><a th:href="@{/pages/shop-grid}">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a th:href="@{/pages/shop-details}">Shop Details</a></li>
                         <li><a th:href="@{/pages/shopping-cart}">Shopping Cart</a></li>
                         <li><a th:href="@{/pages/checkout}">Check Out</a></li>
                         <li><a th:href="@{/pages/blog-details}">Blog Details</a></li>
@@ -81,7 +80,7 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i class="fa fa-envelope"></i> fresh.farm@gmail.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -96,7 +95,7 @@
                     <div class="col-lg-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                <li><i class="fa fa-envelope"></i> fresh.farm@gmail.com</li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
@@ -130,7 +129,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img th:src="@{/img/logo.png}" alt=""></a>
+                        <a href="./index.html"><img th:src="@{/img/fresh_farm_logo.png}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -140,7 +139,6 @@
                             <li class="active"><a th:href="@{/pages/shop-grid}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a th:href="@{/pages/shop-details}">Shop Details</a></li>
                                     <li><a th:href="@{/pages/shopping-cart}">Shopping Cart</a></li>
                                     <li><a th:href="@{/pages/checkout}">Check Out</a></li>
                                     <li><a th:href="@{/pages/blog-details}">Blog Details</a></li>
@@ -210,7 +208,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5>+996 551-040-4428</h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
@@ -350,7 +348,7 @@
                                     <div th:each="chunk : ${#numbers.sequence(0, latestProducts.size() - 1, 3)}" class="latest-prdouct__slider__item">
                                         <a th:each="i : ${#numbers.sequence(chunk, chunk + 2)}"
                                            th:if="${i < latestProducts.size()}"
-                                           th:href="@{/product/{id}(id=${latestProducts[i].id})}"
+                                           th:href="@{/pages/shop-details/{id}(id=${latestProducts[i].id})}"
                                            class="latest-product__item">
                                             <div class="latest-product__item__pic">
                                                 <img th:src="@{${latestProducts[i].imagePath[0]}}" alt="">
@@ -387,7 +385,7 @@
                                         </div>
                                         <div class="product__discount__item__text">
                                             <span th:text="${product.description}"></span>
-                                            <h5><a href="#" th:text="${product.name}"></a></h5>
+                                            <h5><a th:href="@{'/pages/shop-details/' + ${product.id}}" th:text="${product.name}"></a></h5>
                                             <div class="product__item__price">
                                                 <span th:text="'$' + ${product.price}"></span>
                                             </div>
@@ -430,7 +428,7 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a></h6>
+                                    <h6><a th:href="@{'/pages/shop-details/' + ${product.id}}" th:text="${product.name}"></a></h6>
                                     <h5 th:text="' $' + ${product.price}"></h5>
                                 </div>
                             </div>
@@ -464,8 +462,8 @@
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Phone: +996 551-040-4428</li>
+                            <li>Email: fresh.farm@gmail.com</li>
                         </ul>
                     </div>
                 </div>

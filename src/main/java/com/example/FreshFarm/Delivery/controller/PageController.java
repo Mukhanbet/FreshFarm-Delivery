@@ -4,7 +4,10 @@ import com.amazonaws.services.dynamodbv2.document.Page;
 import com.example.FreshFarm.Delivery.model.domain.Product;
 import com.example.FreshFarm.Delivery.model.dto.auth.AuthLoginRequest;
 import com.example.FreshFarm.Delivery.model.dto.auth.AuthRegisterRequest;
+import com.example.FreshFarm.Delivery.model.dto.basket.BasketProductsPrice;
+import com.example.FreshFarm.Delivery.model.dto.basket.BasketResponse;
 import com.example.FreshFarm.Delivery.model.dto.product.ProductResponse;
+import com.example.FreshFarm.Delivery.service.BasketService;
 import com.example.FreshFarm.Delivery.service.CommentService;
 import com.example.FreshFarm.Delivery.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class PageController {
     private final ProductService productService;
     private final CommentService commentService;
+    private final BasketService basketService;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -129,7 +133,16 @@ public class PageController {
     }
 
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model) {
+    public String shoppingCart(
+            @CookieValue(name = "access_token") String token,
+            Model model
+    ) {
+
+        List<BasketResponse> basketItems = basketService.getCustomerBasket("Bearer " + token);
+        BasketProductsPrice totalPrice = basketService.getPrice("Bearer " + token);
+
+        model.addAttribute("basketItems", basketItems);
+        model.addAttribute("totalPrice", totalPrice.getTotalPrice());
         model.addAttribute("title", "Fresh Farm Delivery");
         return "shoping-cart";
     }

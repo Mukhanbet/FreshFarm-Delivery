@@ -29,6 +29,11 @@
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+.shoping__cart__item img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+}
 
 html,
 body {
@@ -409,10 +414,16 @@ ol {
 
 .header__logo {
 	padding: 15px 0;
+	text-align: center; /* Центрирование */
 }
 
 .header__logo a {
 	display: inline-block;
+}
+
+.header__logo img {
+	width: 100px; /* Размер лого, можешь изменить */
+	height: auto; /* Сохраняет пропорции */
 }
 
 .header__menu {
@@ -1919,7 +1930,7 @@ ol {
 	border-bottom: 1px solid #ebebeb;
 }
 
-.shoping__cart__table table tbody tr td.shoping__cart__item {
+.shoping__cart__table table tbody tr {
 	width: 630px;
 	text-align: left;
 }

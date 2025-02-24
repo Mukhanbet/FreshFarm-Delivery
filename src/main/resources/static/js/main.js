@@ -8,6 +8,49 @@
 ---------------------------------------------------------  */
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".remove-from-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const basketId = this.getAttribute("data-basket-id");
+            const token = getCookie("access_token");
+
+            if (!token) {
+                alert("Вы не авторизованы!");
+                return;
+            }
+
+            fetch(`/basket/${basketId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert("Товар удалён из корзины!");
+                    location.reload();
+                } else {
+                    alert("Ошибка при удалении товара!");
+                }
+            }).catch(error => {
+                console.error("Ошибка запроса:", error);
+                alert("Ошибка соединения!");
+            });
+        });
+    });
+
+    function getCookie(name) {
+        let cookies = document.cookie.split("; ");
+        for (let cookie of cookies) {
+            let [key, value] = cookie.split("=");
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+        return null;
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".add-to-basket").forEach(button => {
         button.addEventListener("click", function (event) {
             event.preventDefault();

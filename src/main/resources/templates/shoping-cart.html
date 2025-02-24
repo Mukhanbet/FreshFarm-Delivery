@@ -62,7 +62,6 @@
                 <li><a th:href="@{/pages/shop-grid}">Shop</a></li>
                 <li class="active"><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a th:href="@{/pages/shop-details}">Shop Details</a></li>
                         <li class="active"><a th:href="@{/pages/shopping-cart}">Shopping Cart</a></li>
                         <li><a th:href="@{/pages/checkout}">Check Out</a></li>
                         <li><a th:href="@{/pages/blog-details}">Blog Details</a></li>
@@ -81,7 +80,7 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i class="fa fa-envelope"></i> fresh.farm@gmail.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -96,7 +95,7 @@
                     <div class="col-lg-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                <li><i class="fa fa-envelope"></i> fresh.farm@gmail.com</li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
@@ -130,7 +129,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img th:src="@{/img/logo.png}" alt=""></a>
+                        <a href="./index.html"><img th:src="@{/img/fresh_farm_logo.png}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -140,7 +139,6 @@
                             <li><a th:href="@{/pages/shop-grid}">Shop</a></li>
                             <li class="active"><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a th:href="@{/pages/shop-details}">Shop Details</a></li>
                                     <li class="active"><a th:href="@{/pages/shopping-cart}">Shopping Cart</a></li>
                                     <li><a th:href="@{/pages/checkout}">Check Out</a></li>
                                     <li><a th:href="@{/pages/blog-details}">Blog Details</a></li>
@@ -210,7 +208,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5>+996 551-040-4428</h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
@@ -247,111 +245,49 @@
                     <div class="shoping__cart__table">
                         <table>
                             <thead>
-                                <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img th:src="@{/img/cart/cart-1.jpg}" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
+                            <tr th:each="item : ${basketItems}">
+                                <td class="shoping__cart__item">
+                                    <img th:src="@{${item.imagePath}}" alt="">
+                                    <h5 th:text="${item.name}"></h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    <span th:text="'$' + ${item.price}"></span>
+                                </td>
+                                <td class="shoping__cart__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" th:value="${item.kilo}" disabled>
                                         </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img th:src="@{/img/cart/cart-2.jpg}" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img th:src="@{/img/cart/cart-3.jpg}" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td class="shoping__cart__total">
+                                    <span th:text="'$' + ${item.totalPrice}"></span>
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                    <span class="icon_close remove-from-cart"
+                                          th:data-basket-id="${item.basketId}"></span>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Total <span th:text="'$' + ${totalPrice}"></span></li>
                         </ul>
                         <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
@@ -372,8 +308,8 @@
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Phone: +996 551-040-4428</li>
+                            <li>Email: fresh.farm@gmail.com</li>
                         </ul>
                     </div>
                 </div>
@@ -438,6 +374,18 @@
     <script th:src="@{/js/mixitup.min.js}"></script>
     <script th:src="@{/js/owl.carousel.min.js}"></script>
     <script th:src="@{/js/main.js}"></script>
+
+    <script>
+        const token = /*[[${token}]]*/ '';
+        fetch('/pages/shopping-cart', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
+    </script>
+
 
 
 </body>
